@@ -1,0 +1,5 @@
+<launch>
+    <node name="detect_objects_node1" pkg="wander_cloud" type="detect_objects_node" output="screen">
+        <rosparam command="load" file="$(find wander_cloud)/config/detect_objects.yaml"/>
+    </node>
+</launch>

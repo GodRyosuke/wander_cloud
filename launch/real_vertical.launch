@@ -1,0 +1,5 @@
+<launch>
+    <node name="check_vertical" pkg="wander_cloud" type="check_vertical" output="screen">
+        <param name="pcd_name" value="white_near_cut"/>
+    </node>
+</launch>

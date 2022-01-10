@@ -1,0 +1,43 @@
+○realsense d435iから得たデータの保存
+roslaunch realsense2_camera rs_camera.launch filters:=pointcloud // カメラを実行して、点群データを作る
+rosrun wander_cloud cloud_from_realsense // 点群データを受け取る
+
+rosrun wander_cloud save_realsense_data // これもしくは
+rosservice call /save_cloud true // を実行すると、点群データがdataディレクトリにpcd_from_realsense.pcdなる名前で保存される
+
+
+○realsense d435iから得た点群データをもとに、円柱、平面、その交線を認識する
+roscore
+roslaunch realsense2_camera rs_rgbd.launch // カメラを実行して、点群データを作る
+rosrun wander_cloud cloud_from_realsense
+
+rosrun wander_cloud detect_cylinder_from_realsense // ←これを実行したら、結果の点群データが、
+// 平面: detected_plane_from_realsense.pcd
+// 円柱: detected_cylinder_from_realsense.pcd
+// 交線の円: detected_circle_from_realsense.pcd
+// なる名前でそれぞれ保存される
+
+
+○cloud compare 使い方
+・実行
+cloudcompare.CloudCompare
+
+
+○平面と円柱との交線導出処理
+roscore
+roslaunch wander_cloud detect_objects.launch
+→detect_objects.yamlに書かれたpcdファイルから交線検出処理をする
+デフォルトは円柱と平面が斜めに交わったときにできる楕円弧を描画している
+
+○点群データとそのときのrgb画像を同時に保存する
+roslaunch realsense2_camera rs_rgbd.launch
+rosrun wander_cloud get_pcd_jpg
+rosservice call /save_pcd_jpg true ←撮影
+
+○溶接物の直交性を調べる
+rosrun
+roslaunch wander_cloud real_vertical.launch
+一旦終了させ、以下のパラメータで認識したい点群を決める
+rosparam set /check_vertical/pcd_name black_far
+rosrun wander_cloud check_vertical ←セットした点群の直交性を調べる
+

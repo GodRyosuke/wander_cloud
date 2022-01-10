@@ -1,0 +1,4 @@
+<launch>
+    <node name="cloud_creator" pkg="wander_cloud" type="cloud_creator" />
+    <node name="rviz" pkg="rviz" type="rviz" args="-d $(find wander_cloud)/rviz/creation.rviz" required="true" />
+</launch>

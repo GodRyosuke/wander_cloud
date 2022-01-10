@@ -1,0 +1,5 @@
+<launch>
+    <node name="test_yaml" pkg="wander_cloud" type="wander_mani" output="screen">
+        <rosparam command="load" file="$(find wander_cloud)/config/testyaml.yaml"/>
+    </node>
+</launch>
